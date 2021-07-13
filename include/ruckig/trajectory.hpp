@@ -35,7 +35,6 @@ class Trajectory {
     //! Set of current profiles for each DoF
     Vector<Profile> profiles;
 
-    double duration {0.0};
     Vector<double> independent_min_durations;
 
     Vector<double> pd;
@@ -196,6 +195,7 @@ class Trajectory {
     }
 
 public:
+    double duration {0.0};
     size_t degrees_of_freedom;
 
     template <size_t D = DOFs, typename std::enable_if<D >= 1, int>::type = 0>
