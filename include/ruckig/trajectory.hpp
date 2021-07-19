@@ -482,6 +482,17 @@ public:
         return position_extrema;
     }
 
+    std::vector<std::array< double, 7 >> get_jerks_and_times() const{
+        std::vector<std::array< double, 7 >> jerk_time_vector;
+        for (size_t dof = 0; dof < profiles.size(); ++dof) {
+            const Profile& p = profiles[dof];
+            jerk_time_vector.push_back(p.t);
+            jerk_time_vector.push_back(p.j);
+        }
+        return jerk_time_vector;
+    }
+ 
+
     //! Get the time that this trajectory passes a specific position of a given DoF the first time
     //! If the position is passed, this method returns true, otherwise false
     //! The Python wrapper takes `dof` and `position` as arguments and returns `time` (or `None`) instead

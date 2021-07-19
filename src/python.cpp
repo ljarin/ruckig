@@ -57,6 +57,9 @@ limited by velocity, acceleration, and jerk constraints.";
             return "[" + std::to_string(ext.min) + ", " + std::to_string(ext.max) + "]";
         });
 
+    py::class_<Profile>(m, "Profile")
+         .def_static("integrate",&Profile::integrate);
+
     py::class_<Trajectory<DynamicDOFs>>(m, "Trajectory")
         .def(py::init<size_t>(), "dofs"_a)
         .def_readonly("degrees_of_freedom", &Trajectory<DynamicDOFs>::degrees_of_freedom)
@@ -64,7 +67,8 @@ limited by velocity, acceleration, and jerk constraints.";
         .def_property_readonly("intermediate_durations", &Trajectory<DynamicDOFs>::get_intermediate_durations)
         .def_property_readonly("independent_min_durations", &Trajectory<DynamicDOFs>::get_independent_min_durations)
         .def_property_readonly("position_extrema", &Trajectory<DynamicDOFs>::get_position_extrema)
-        .def("at_time", [](const Trajectory<DynamicDOFs>& traj, double time) {
+        .def_property_readonly("jerks_and_times", &Trajectory<DynamicDOFs>::get_jerks_and_times)        
+	.def("at_time", [](const Trajectory<DynamicDOFs>& traj, double time) {
             std::vector<double> new_position(traj.degrees_of_freedom), new_velocity(traj.degrees_of_freedom), new_acceleration(traj.degrees_of_freedom);
             traj.at_time(time, new_position, new_velocity, new_acceleration);
             return py::make_tuple(new_position, new_velocity, new_acceleration);
