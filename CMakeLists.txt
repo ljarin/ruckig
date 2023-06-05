@@ -21,6 +21,7 @@ endif()
 
 find_package(Reflexxes)
 
+set (ruckig_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include PARENT_SCOPE) 
 
 add_library(ruckig
   src/brake.cpp
